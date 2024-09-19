@@ -1,0 +1,9 @@
+name: Runner Demo
+on:
+  push
+
+jobs:
+  demo:
+    runs-on: arc-runner-set
+    steps:
+    - run: echo "🎉 This job uses runner scale set runners!"
