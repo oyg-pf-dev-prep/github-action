@@ -11,7 +11,9 @@ jobs:
     runs-on: arc-runner-set
     steps:
       - name: Check docker
-        run: docker --version
+        run: |
+          docker --version
+          ls -l /var/run/docker.sock
 
   deploy:
     name: Deploy
