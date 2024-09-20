@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Check docker --version
         run: docker --version
+
+      - name: Check docker service status
+        run: service docker status
       
       - name: Check docker root dir
         run: docker info | grep 'Docker Root Dir'
