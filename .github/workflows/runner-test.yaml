@@ -2,6 +2,10 @@ name: Runner Demo
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   demo:
     runs-on: arc-runner-set
