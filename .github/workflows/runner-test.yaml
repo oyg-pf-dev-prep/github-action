@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Check docker --version
         run: docker --version
+      
+      - name: Run docker demon
+        run: sudo dockerd
 
       - name: Check docker service status
         run: systemctl status docker
