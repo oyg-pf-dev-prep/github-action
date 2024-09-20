@@ -10,7 +10,7 @@ jobs:
         run: echo "🎉 This job uses runner scale set runners!"
 
       - name: echo template
-        uses: ./show-name-template.yml
+        uses: oyg-pf-dev-prep/github-action/.github/workflows/show-name-template.yml@main
         with:
           naming: 'GA Demo'
     
