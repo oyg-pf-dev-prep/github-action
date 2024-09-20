@@ -9,8 +9,8 @@ jobs:
       - name: echo demo
         run: echo "🎉 This job uses runner scale set runners!"
 
-      - name: echo template
-        uses: oyg-pf-dev-prep/github-action-template/.github/workflows/show-name-template.yaml@main
-        with:
-          naming: 'GA Demo'
-    
+  show-name:
+    runs-on: arc-runner-set
+    uses: oyg-pf-dev-prep/github-action-template/.github/workflows/show-name-template.yaml@main
+    with:
+      naming: 'GA Demo'
