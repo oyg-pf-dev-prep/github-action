@@ -7,18 +7,6 @@ permissions:
   contents: read
 
 jobs:
-  demo:
-    runs-on: arc-runner-set
-    steps:
-      - name: echo demo
-        run: echo "🎉 This job uses runner scale set runners!"
-
-  show-name:
-    uses: oyg-pf-dev-prep/github-action-template/.github/workflows/show-name-template.yaml@main
-    with:
-      naming: 'GA Demo'
-    
-
   helm-eks:
     uses: oyg-pf-dev-prep/github-action-template/.github/workflows/EKS-helm-deploy.yaml@main
     with:
