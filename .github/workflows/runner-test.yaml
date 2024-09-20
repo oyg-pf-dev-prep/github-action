@@ -14,3 +14,14 @@ jobs:
     with:
       naming: 'GA Demo'
     
+
+  helm-eks:
+    uses: oyg-pf-dev-prep/github-action-template/.github/workflows/EKS-helm-deploy.yaml
+    with:
+      env: dev
+      cluster-name: hansu-sandbox-eks
+      aws-region: ap-northeast-2
+      namespace: github-action-test
+      release-name: nginx-action
+    # secrets:
+    #   AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
