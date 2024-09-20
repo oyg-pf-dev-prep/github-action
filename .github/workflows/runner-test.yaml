@@ -6,4 +6,11 @@ jobs:
   demo:
     runs-on: arc-runner-set
     steps:
-    - run: echo "🎉 This job uses runner scale set runners!"
+      - name: echo demo
+        run: echo "🎉 This job uses runner scale set runners!"
+
+      - name: echo template
+        uses: ./show-name-template.yml
+        with:
+          naming: 'GA Demo'
+    
