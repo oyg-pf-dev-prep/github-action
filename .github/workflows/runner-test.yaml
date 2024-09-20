@@ -16,7 +16,7 @@ jobs:
     
 
   helm-eks:
-    uses: oyg-pf-dev-prep/github-action-template/.github/workflows/EKS-helm-deploy.yaml
+    uses: oyg-pf-dev-prep/github-action-template/.github/workflows/EKS-helm-deploy.yaml@main
     with:
       env: dev
       cluster-name: hansu-sandbox-eks
