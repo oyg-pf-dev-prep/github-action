@@ -35,7 +35,9 @@ jobs:
                   "text": {
                     "type": "mrkdwn",
                     "text": "GitHub Action build result block: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                  },
+                  }
+                },
+                {
                   "type": "actions",
                   "elements": [
                     {
@@ -44,8 +46,8 @@ jobs:
                         "type": "plain_text",
                         "text": "GoToNaver"
                       },
-                      "action_id": "go_to_naver",
-                      "url": "https://naver.com"
+                      "url": "https://naver.com",
+                      "action_id": "go_to_naver"
                     },
                     {
                       "type": "button",
@@ -54,8 +56,8 @@ jobs:
                         "type": "plain_text",
                         "text": "GoToOlive"
                       },
-                      "action_id": "go_to_olive",
-                      "url": "https://global.oliveyoung.com"
+                      "url": "https://global.oliveyoung.com",
+                      "action_id": "go_to_olive"
                     },
                     {
                       "type": "button",
@@ -64,12 +66,13 @@ jobs:
                         "type": "plain_text",
                         "text": "GoToGoogle"
                       },
-                      "action_id": "go_to_google",
-                      "url": "https://google.com"
+                      "url": "https://google.com",
+                      "action_id": "go_to_google"
                     }
                   ]
                 }
               ]
             }
+
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
