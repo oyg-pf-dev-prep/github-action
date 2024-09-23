@@ -35,7 +35,39 @@ jobs:
                   "text": {
                     "type": "mrkdwn",
                     "text": "GitHub Action build result block: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                  }
+                  },
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "GoToNaver"
+                      },
+                      "action_id": "go_to_naver",
+                      "url": "https://naver.com"
+                    },
+                    {
+                      "type": "button",
+                      "style": "primary",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "GoToOlive"
+                      },
+                      "action_id": "go_to_olive",
+                      "url": "https://global.oliveyoung.com"
+                    },
+                    {
+                      "type": "button",
+                      "style": "danger",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "GoToGoogle"
+                      },
+                      "action_id": "go_to_google",
+                      "url": "https://google.com"
+                    }
+                  ]
                 }
               ]
             }
