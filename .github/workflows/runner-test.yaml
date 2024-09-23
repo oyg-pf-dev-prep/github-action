@@ -2,72 +2,37 @@ name: Runner Demo
 on:
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
-  check-docker:
+  runner-check:
+    name: Runner Check
     runs-on: arc-runner-set
-    services:
-      docker:
-        image: docker:dind
-        options: --privileged
-        ports:
-          - 2375:2375
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock
 
     steps:
-      - name: Check docker --version
-        run: docker --version
+      - name: Check run echo
+        run: echo "🎉 This job uses runner scale set runners!"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Run docker demon
-        run: sudo dockerd
-
-      - name: Check docker service status
-        run: systemctl status docker
-
-      - name: Check docker root dir
-        run: docker info | grep 'Docker Root Dir'
-
-      - name: Check docker.sock
-        run: ls -l /var/run/docker.sock
-
-  deploy:
-    name: Deploy
+  send-slack:
+    name: Send slack Check
     runs-on: arc-runner-set
-    environment: dev
+    needs: runner-check
 
     steps:
-      - name: Configure AWS Credential
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Send slack
+        uses: slackapi/slack-github-action@v1.27.0
         with:
-          # role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ap-northeast-2
-
-      - name: Deploy
-        uses: cloudposse/github-action-deploy-helmfile@main
-        id: deploy
-        with:
-          aws-region: ap-northeast-2
-          cluster: hansu-sandbox-eks
-          environment: dev
-          namespace: github-action-test
-          chart-repository: oci://registry-1.docker.io/
-          chart-path: bitnamicharts/nginx
-          name: nginx-action
-
-  helm-eks:
-    uses: oyg-pf-dev-prep/github-action-template/.github/workflows/EKS-helm-deploy.yaml@main
-    with:
-      env: dev
-      cluster-name: hansu-sandbox-eks
-      aws-region: ap-northeast-2
-      namespace: github-action-test
-      release-name: nginx-action
-    # secrets:
-    #   AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+          channel-id: 'C07CZ28B266'
+          payload: |
+            {
+              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
