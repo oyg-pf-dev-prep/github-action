@@ -17,19 +17,24 @@ jobs:
     needs: runner-check
 
     steps:
+      - name: check github event
+        run: |
+          echo ${{ github.event.pull_request.html_url }}
+          echo ${{ github.event.head_commit.url }}
+
       - name: Send slack
         uses: slackapi/slack-github-action@v1.27.0
         with:
           channel-id: 'C07CZ28B266'
           payload: |
             {
-              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": "GitHub Action build result text: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": "GitHub Action build result block: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                   }
                 }
               ]
