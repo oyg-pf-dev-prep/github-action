@@ -9,7 +9,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   notify-commits:
-    runs-on: arc-runner-set
+    # runs-on: arc-runner-set
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -19,7 +20,7 @@ jobs:
       - name: Get List of Commits
         id: get_commits
         run: |
-          git fetch origin release  # release 브랜치 정보 가져오기
+          git fetch origin stage  # stage 브랜치 정보 가져오기
           commits=$(git log --oneline origin/dev..origin/stage)
           echo "$commits"
           echo "::set-output name=commits::$commits"
