@@ -25,6 +25,45 @@ jobs:
           echo "$commits"
           echo "::set-output name=commits::$commits"
 
+      - name: Create Jira Ticket
+        id: create_jira_ticket
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://api.example.com/endpoint'
+          method: 'POST'
+          customHeaders: |
+            {
+              Authorization: Bearer ${{ secrets.JIRA_ACCESS_TOKEN_TEST }}
+              Content-Type: application/json
+            }
+          data: |
+            '{
+              "fields": {
+                "project": {
+                  "key": "GITINIT"
+                },
+                "summary": "Deploy to stage env",
+                "description": "${{ steps.get_commits.outputs.commits }}",
+                "issuetype": {
+                "name": "Task"
+                },
+                "customfield_15405": [
+                {
+                    "self": "https://oyitsm.cj.net/jira/rest/api/2/customFieldOption/15615",
+                    "value": "글로벌 플랫폼 개발팀",
+                    "id": "15615",
+                    "disabled": false
+                },
+                {
+                    "self": "https://oyitsm.cj.net/jira/rest/api/2/customFieldOption/15616",
+                    "value": "글로벌 개인화 개발팀",
+                    "id": "15616",
+                    "disabled": false
+                }
+                ]
+              }
+            }'        
+
       - name: Send slack
         uses: slackapi/slack-github-action@v1.27.0
         with:
@@ -37,7 +76,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "The following commits are being merged from dev to stage:\n${{ steps.get_commits.outputs.commits }}"
+                    "text": "Jira Ticket ${{ fromJson(steps.create_jira_ticket.outputs.response).name }}: \n ${{ fromJson(steps.create_jira_ticket.outputs.response).self }}  :\n${{ steps.get_commits.outputs.commits }}\n"
                   }
                 }
               ]
