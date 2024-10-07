@@ -21,7 +21,7 @@ jobs:
         id: get_commits
         run: |
           git fetch origin stage  # stage 브랜치 정보 가져오기
-          commits=$(git log --oneline origin/stage..origin/dev)
+          commits=$(git log --oneline origin/stage..origin/dev | sed ':a;N;$!ba;s/\n/\\n/g')
           echo "$commits"
           echo "::set-output name=commits::$commits"
 
