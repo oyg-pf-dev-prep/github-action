@@ -9,7 +9,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   notify-commits:
-    runs-on: arc-runner-set
+    # runs-on: arc-runner-set
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
