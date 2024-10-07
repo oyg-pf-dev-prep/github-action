@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # 전체 히스토리 가져오기
+          fetch-depth: 0 # 전체 히스토리 가져오기
 
       - name: Get List of Commits
         id: get_commits
@@ -29,45 +29,44 @@ jobs:
         id: create_jira_ticket
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://api.example.com/endpoint'
-          method: 'POST'
+          url: "https://api.example.com/endpoint"
+          method: "POST"
           customHeaders: |
             {
               Authorization: Bearer ${{ secrets.JIRA_ACCESS_TOKEN_TEST }}
               Content-Type: application/json
             }
           data: |
-            '{
+            {
               "fields": {
                 "project": {
                   "key": "GITINIT"
                 },
                 "summary": "Deploy to stage env",
-                "description": "${{ steps.get_commits.outputs.commits }}",
                 "issuetype": {
-                "name": "Task"
+                  "name": "Task"
                 },
                 "customfield_15405": [
-                {
-                    "self": "https://oyitsm.cj.net/jira/rest/api/2/customFieldOption/15615",
-                    "value": "글로벌 플랫폼 개발팀",
-                    "id": "15615",
-                    "disabled": false
-                },
-                {
-                    "self": "https://oyitsm.cj.net/jira/rest/api/2/customFieldOption/15616",
-                    "value": "글로벌 개인화 개발팀",
-                    "id": "15616",
-                    "disabled": false
-                }
+                  {
+                      "self": "https://oyitsm.cj.net/jira/rest/api/2/customFieldOption/15615",
+                      "value": "글로벌 플랫폼 개발팀",
+                      "id": "15615",
+                      "disabled": false
+                  },
+                  {
+                      "self": "https://oyitsm.cj.net/jira/rest/api/2/customFieldOption/15616",
+                      "value": "글로벌 개인화 개발팀",
+                      "id": "15616",
+                      "disabled": false
+                  }
                 ]
               }
-            }'        
+            }
 
       - name: Send slack
         uses: slackapi/slack-github-action@v1.27.0
         with:
-          channel-id: 'C07R2FM9X5F'
+          channel-id: "C07R2FM9X5F"
           payload: |
             {
               "text": "Merge from `dev` to `stage`",
