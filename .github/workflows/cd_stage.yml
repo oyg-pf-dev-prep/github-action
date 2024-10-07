@@ -43,6 +43,7 @@ jobs:
                   "key": "GITINIT"
                 },
                 "summary": "Deploy to stage env",
+                "description": "${{ steps.get_commits.outputs.commits }}",
                 "issuetype": {
                   "name": "Task"
                 },
