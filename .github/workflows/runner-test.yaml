@@ -6,7 +6,8 @@ jobs:
   runner-check:
     name: Runner Check
     runs-on: arc-runner-set
-
+    environment:
+      name: prod  # 생성한 환경 이름
     steps:
       - name: Check run echo
         run: echo "🎉 This job uses runner scale set runners!"
@@ -22,57 +23,57 @@ jobs:
           echo ${{ github.event.pull_request.html_url }}
           echo ${{ github.event.head_commit.url }}
 
-      - name: Send slack
-        uses: slackapi/slack-github-action@v1.27.0
-        with:
-          channel-id: 'C07CZ28B266'
-          payload: |
-            {
-              "text": "GitHub Action build result text: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result block: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                  }
-                },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "GoToNaver"
-                      },
-                      "url": "https://naver.com",
-                      "action_id": "go_to_naver"
-                    },
-                    {
-                      "type": "button",
-                      "style": "primary",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "GoToOlive"
-                      },
-                      "url": "https://global.oliveyoung.com",
-                      "action_id": "go_to_olive"
-                    },
-                    {
-                      "type": "button",
-                      "style": "danger",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "GoToGoogle"
-                      },
-                      "url": "https://google.com",
-                      "action_id": "go_to_google"
-                    }
-                  ]
-                }
-              ]
-            }
+      # - name: Send slack
+      #   uses: slackapi/slack-github-action@v1.27.0
+      #   with:
+      #     channel-id: 'C07CZ28B266'
+      #     payload: |
+      #       {
+      #         "text": "GitHub Action build result text: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+      #         "blocks": [
+      #           {
+      #             "type": "section",
+      #             "text": {
+      #               "type": "mrkdwn",
+      #               "text": "GitHub Action build result block: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+      #             }
+      #           },
+      #           {
+      #             "type": "actions",
+      #             "elements": [
+      #               {
+      #                 "type": "button",
+      #                 "text": {
+      #                   "type": "plain_text",
+      #                   "text": "GoToNaver"
+      #                 },
+      #                 "url": "https://naver.com",
+      #                 "action_id": "go_to_naver"
+      #               },
+      #               {
+      #                 "type": "button",
+      #                 "style": "primary",
+      #                 "text": {
+      #                   "type": "plain_text",
+      #                   "text": "GoToOlive"
+      #                 },
+      #                 "url": "https://global.oliveyoung.com",
+      #                 "action_id": "go_to_olive"
+      #               },
+      #               {
+      #                 "type": "button",
+      #                 "style": "danger",
+      #                 "text": {
+      #                   "type": "plain_text",
+      #                   "text": "GoToGoogle"
+      #                 },
+      #                 "url": "https://google.com",
+      #                 "action_id": "go_to_google"
+      #               }
+      #             ]
+      #           }
+      #         ]
+      #       }
 
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
