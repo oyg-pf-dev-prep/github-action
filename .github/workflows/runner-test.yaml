@@ -5,7 +5,8 @@ on:
 jobs:
   runner-check:
     name: Runner Check
-    runs-on: arc-runner-set
+    # runs-on: arc-runner-set
+    runs-on: ubuntu-latest
     environment:
       name: prod  # 생성한 환경 이름
     steps:
