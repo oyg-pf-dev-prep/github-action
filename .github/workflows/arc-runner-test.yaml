@@ -1,0 +1,14 @@
+name: Arc Runner Test
+on:
+  workflow_dispatch:
+
+jobs:
+  runner-check:
+    name: Runner Check
+    runs-on: arc-runner-set
+    # runs-on: ubuntu-latest
+    # environment:
+    #  name: prod  # 생성한 환경 이름
+    steps:
+      - name: Check run echo
+        run: echo "🎉 This job uses runner scale set runners!"
