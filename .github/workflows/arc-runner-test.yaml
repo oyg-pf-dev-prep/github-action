@@ -8,6 +8,11 @@ on:
           default: 'latest'
           type: string
 
+concurrency:
+  group: arc_ruuner_test_group
+  # group : workflow-name-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   runner-check:
     name: Runner Check
