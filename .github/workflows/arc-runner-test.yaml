@@ -1,6 +1,12 @@
 name: Arc Runner Test
 on:
   workflow_dispatch:
+    inputs:
+        commit_or_tag:
+          description: 'Commit hash or tag'
+          required: true
+          default: 'latest'
+          type: string
 
 jobs:
   runner-check:
