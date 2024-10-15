@@ -1,7 +1,9 @@
-name: Build using jib cli
+name: Setup JibCli
 
 # Controls when the workflow will run
 on:
+  workflow_dispatch:
+  
   workflow_call:
     inputs:
       version:
