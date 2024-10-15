@@ -46,6 +46,8 @@ jobs:
           
       - name: Check jib installation
         run: |
+          echo 'Current java version : '
+          java --version
           echo 'Current jib version : '
           jib --version
       
