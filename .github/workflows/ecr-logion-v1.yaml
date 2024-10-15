@@ -1,5 +1,8 @@
 name: AWS ECR Login v1
 
+
+
+
 # Controls when the workflow will run
 on:
   workflow_dispatch:
@@ -32,6 +35,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write  # OIDC 토큰을 요청할 수 있도록 권한을 설정
+      contents: read   # actions/checkout을 위한 권한
 
     steps:
       - name: Configure AWS credentials
