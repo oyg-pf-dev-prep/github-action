@@ -1,0 +1,52 @@
+name: AWS ECR Login v1
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository-uri:
+        required: true
+        type: string
+        default: '484907487980.dkr.ecr.ap-northeast-2.amazonaws.com/sample-cicd-pub'
+      role-name:
+        required: true
+        type: string
+        default: 'arn:aws:iam::484907487980:role/GithubRole'
+      aws-region:
+        required: false
+        type: string
+        default: 'ap-northeast-2'
+  
+  workflow_call:
+    inputs:
+      repository_uri:
+        required: true
+        type: string
+        default: '484907487980.dkr.ecr.ap-northeast-2.amazonaws.com/sample-cicd-pub'
+      role-name:
+        required: true
+        type: string
+        default: 'arn:aws:iam::484907487980:role/GithubRole'
+      aws-region:
+        required: false
+        type: string
+        default: 'ap-northeast-2'
+        
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write  # OIDC 토큰을 요청할 수 있도록 권한을 설정
+      contents: read   # actions/checkout을 위한 권한
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ github.event.inputs.role-name }}
+          aws-region: ${{ github.event.inputs.aws-region }}
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        run: |
+          aws ecr get-login-password --region ${{ github.event.inputs.aws-region }} | docker login --username AWS --password-stdin ${{ github.event.inputs.repository-uri }}
