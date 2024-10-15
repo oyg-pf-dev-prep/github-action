@@ -40,8 +40,8 @@ jobs:
       # Jib CLI 다운로드 및 설치
       - name: Install Jib CLI
         run: |
-          curl -L "https://github.com/GoogleContainerTools/jib/releases/download/v${{ inputs.version }}-cli/jib-jre-${{ inputs.version }}.zip" -o jib-cli.tar.gz
-          tar -xzvf jib-cli.tar.gz
+          curl -L "https://github.com/GoogleContainerTools/jib/releases/download/v${{ inputs.version }}-cli/jib-jre-${{ inputs.version }}.zip" -o jib-cli.zip
+          unzip jib-cli.zip
           sudo mv jib-${{ inputs.version }}/bin/jib /usr/local/bin/jib
           
       - name: Check jib installation
