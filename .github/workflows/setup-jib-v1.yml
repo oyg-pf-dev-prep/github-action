@@ -43,7 +43,6 @@ jobs:
           curl -L "https://github.com/GoogleContainerTools/jib/releases/download/v${{ inputs.version }}-cli/jib-jre-${{ inputs.version }}.zip" -o jib-cli.zip
           unzip jib-cli.zip
           sudo ln -s "$(pwd)/jib-${{ inputs.version }}/bin/jib" /usr/local/bin/jib
-          ls -al /usr/local/bin | grep jib
           
       - name: Check jib installation
         run: |
