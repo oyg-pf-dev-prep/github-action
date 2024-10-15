@@ -3,6 +3,15 @@ name: Setup JibCli
 # Controls when the workflow will run
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        required: false
+        type: string
+        default: '0.13.0'
+      java-version:
+        required: false
+        type: string
+        default: ''
   
   workflow_call:
     inputs:
