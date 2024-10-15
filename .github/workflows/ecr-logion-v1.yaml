@@ -1,0 +1,41 @@
+name: Setup JibCli v1
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    # inputs:
+    #   role-name:
+    #     required: true
+    #     type: string
+    #     default: 'arn:aws:iam::484907487980:role/GithubRole'
+    #   aws-region:
+    #     required: false
+    #     type: string
+    #     default: 'ap-northeast-2'
+  
+  # workflow_call:
+  #   inputs:
+  #     version:
+  #       required: false
+  #       type: string
+  #       default: '0.13.0'
+  #     java-version:
+  #       required: false
+  #       type: string
+  #       default: ''
+        
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::484907487980:role/GithubRole
+          aws-region: ap-northeast-2
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ github.event.inputs.ecr_repository_uri }}
