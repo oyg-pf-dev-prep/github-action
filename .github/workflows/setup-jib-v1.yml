@@ -1,0 +1,40 @@
+name: Build using jib cli
+
+# Controls when the workflow will run
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: false
+        type: string
+        default: '0.13.0'
+      java-version:
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # JDK 설치
+      - name: Set up JDK 11
+        if: ${{ inputs.java-version != '' }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: ${{ inputs.java-version }}
+          
+      # Jib CLI 다운로드 및 설치
+      - name: Install Jib CLI
+        run: |
+          curl -L "https://github.com/GoogleContainerTools/jib/releases/download/v${{ inputs.version }}-cli/jib-jre-${{ inputs.version }}.zip" -o jib-cli.tar.gz
+          tar -xzvf jib-cli.tar.gz
+          sudo mv jib-${{ inputs.version }}/bin/jib /usr/local/bin/jib
+          
+      - name: Check jib installation
+        run: |
+          echo 'Current jib version : '
+          jib --version
+      
