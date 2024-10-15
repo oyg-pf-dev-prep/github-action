@@ -1,4 +1,4 @@
-name: AWS ECR Login
+name: AWS ECR Login v1
 
 # Controls when the workflow will run
 on:
