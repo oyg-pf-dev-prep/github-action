@@ -1,4 +1,4 @@
-name: Setup JibCli v1
+name: AWS ECR Login
 
 # Controls when the workflow will run
 on:
