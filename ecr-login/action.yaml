@@ -31,6 +31,3 @@ runs:
       run: |
         aws ecr get-login-password --region ${{ inputs.aws-region }} | \
         docker login --username AWS --password-stdin ${{ inputs.repository-uri }}
-
-  outputs:
-    repository-uri: ${{ inputs.repository-uri }}
