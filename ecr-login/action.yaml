@@ -13,9 +13,6 @@ inputs:
     default: "ap-northeast-2"
 
 runs:
-  permissions:
-    id-token: write  # OIDC 토큰을 요청할 수 있도록 권한을 설정
-    contents: read   # actions/checkout을 위한 권한
   using: "composite"
   steps:
     - name: Configure AWS credentials
