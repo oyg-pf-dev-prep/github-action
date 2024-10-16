@@ -19,24 +19,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Set default inputs
-      id: default_inputs
-      run: |
-        if [ -z "${{ inputs.repository-uri }}" ]; then
-          echo "Using default repository-uri=${{ vars.PROD_ECR_URI }}"
-          echo "repository-uri=${{ vars.PROD_ECR_URI }}" >> $GITHUB_OUTPUT
-        else
-          echo "Using provided repository-uri=${{ inputs.repository-uri }}"
-          echo "repository-uri=${{ inputs.repository-uri }}" >> $GITHUB_OUTPUT
-        fi
-        if [ -z "${{ inputs.role-name }}" ]; then
-          echo "Using default role-name=${{ vars.PROD_GITHUB_ROLE_ARN }}"
-          echo "role-name=${{ vars.PROD_GITHUB_ROLE_ARN }}" >> $GITHUB_OUTPUT
-        else
-          echo "Using provided role-name=${{ inputs.role-name }}"
-          echo "role-name=${{ inputs.role-name }}" >> $GITHUB_OUTPUT
-        fi
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
