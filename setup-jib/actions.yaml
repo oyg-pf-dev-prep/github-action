@@ -1,0 +1,23 @@
+name: "Setup Jib CLI"
+description: "Setup JDK and Jib CLI on the runner"
+inputs:
+  version:
+    description: "Jib CLI version to install"
+    required: false
+    default: "0.13.0"
+
+runs:
+  using: "composite"
+  steps:
+    # Jib CLI 다운로드 및 설치
+    - name: Install Jib CLI
+      run: |
+        curl -L "https://github.com/GoogleContainerTools/jib/releases/download/v${{ inputs.version }}-cli/jib-jre-${{ inputs.version }}.zip" -o jib-cli.zip
+        unzip jib-cli.zip
+        sudo ln -s "$(pwd)/jib-${{ inputs.version }}/bin/jib" /usr/local/bin/jib
+
+    # 설치 확인
+    - name: Check Jib installation
+      run: |
+        echo 'Current Jib version:'
+        jib --version

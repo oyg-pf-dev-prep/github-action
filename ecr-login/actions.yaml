@@ -1,0 +1,55 @@
+name: "AWS ECR Login Action"
+description: "Log in to Amazon ECR using OIDC and AWS credentials"
+inputs:
+  repository-uri:
+    description: "The ECR repository URI"
+    required: false
+    default: ""
+  role-name:
+    description: "The AWS role to assume"
+    required: false
+    default: ""
+  aws-region:
+    description: "The AWS region to use"
+    required: false
+    default: "ap-northeast-2"
+
+outputs:
+  repository-uri:
+    description: "The repository URI used for ECR login"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set default inputs
+      id: default_inputs
+      run: |
+        if [ -z "${{ inputs.repository-uri }}" ]; then
+          echo "Using default repository-uri=${{ vars.PROD_ECR_URI }}"
+          echo "repository-uri=${{ vars.PROD_ECR_URI }}" >> $GITHUB_OUTPUT
+        else
+          echo "Using provided repository-uri=${{ inputs.repository-uri }}"
+          echo "repository-uri=${{ inputs.repository-uri }}" >> $GITHUB_OUTPUT
+        fi
+        if [ -z "${{ inputs.role-name }}" ]; then
+          echo "Using default role-name=${{ vars.PROD_GITHUB_ROLE_ARN }}"
+          echo "role-name=${{ vars.PROD_GITHUB_ROLE_ARN }}" >> $GITHUB_OUTPUT
+        else
+          echo "Using provided role-name=${{ inputs.role-name }}"
+          echo "role-name=${{ inputs.role-name }}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ steps.default_inputs.outputs.role-name }}
+        aws-region: ${{ inputs.aws-region }}
+
+    - name: Login to Amazon ECR
+      id: ecr-login
+      run: |
+        aws ecr get-login-password --region ${{ inputs.aws-region }} | \
+        docker login --username AWS --password-stdin ${{ steps.default_inputs.outputs.repository-uri }}
+
+  outputs:
+    repository-uri: ${{ steps.default_inputs.outputs.repository-uri }}
