@@ -18,7 +18,7 @@ on:
   
   workflow_call:
     inputs:
-      repository_uri:
+      repository-uri:
         required: true
         type: string
         default: '484907487980.dkr.ecr.ap-northeast-2.amazonaws.com/sample-cicd-pub'
