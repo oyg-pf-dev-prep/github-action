@@ -6,7 +6,7 @@ on:
       repository-uri:
         required: true
         type: string
-        default: '484907487980.dkr.ecr.ap-northeast-2.amazonaws.com/sample-cicd-pub'
+        default: '484907487980.dkr.ecr.ap-northeast-2.amazonaws.com'
       role-name:
         required: true
         type: string
@@ -21,7 +21,7 @@ on:
       repository-uri:
         required: true
         type: string
-        default: '484907487980.dkr.ecr.ap-northeast-2.amazonaws.com/sample-cicd-pub'
+        default: '484907487980.dkr.ecr.ap-northeast-2.amazonaws.com'
       role-name:
         required: false
         type: string
@@ -43,10 +43,10 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ github.event.inputs.role-name }}
-          aws-region: ${{ github.event.inputs.aws-region }}
+          role-to-assume: ${{ inputs.role-name }}
+          aws-region: ${{ inputs.aws-region }}
 
       - name: Login to Amazon ECR
         id: ecr-login
         run: |
-          aws ecr get-login-password --region ${{ github.event.inputs.aws-region }} | docker login --username AWS --password-stdin ${{ github.event.inputs.repository-uri }}
+          aws ecr get-login-password --region ${{ inputs.aws-region }} | docker login --username AWS --password-stdin ${{ inputs.repository-uri }}
