@@ -12,10 +12,6 @@ inputs:
     required: false
     default: "ap-northeast-2"
 
-outputs:
-  repository-uri:
-    description: "The repository URI used for ECR login"
-
 runs:
   using: "composite"
   steps:
