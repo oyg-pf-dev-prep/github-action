@@ -23,7 +23,7 @@ on:
         type: string
         default: '484907487980.dkr.ecr.ap-northeast-2.amazonaws.com/sample-cicd-pub'
       role-name:
-        required: true
+        required: false
         type: string
         default: 'arn:aws:iam::484907487980:role/GithubRole'
       aws-region:
