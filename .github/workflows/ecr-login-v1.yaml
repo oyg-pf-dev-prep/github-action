@@ -69,3 +69,6 @@ jobs:
         id: ecr-login
         run: |
           aws ecr get-login-password --region ${{ inputs.aws-region }} | docker login --username AWS --password-stdin ${{ steps.default_inputs.outputs.repository-uri }}
+
+    outputs:
+      repository-uri: ${{ steps.default_inputs.outputs.repository-uri }}
